@@ -55,31 +55,44 @@ def parse_input(data):
     return result_dict
 
 
-class Polygon:
+class BaseShape:
+    def get_perimeter(self):
+        raise NotImplementedError
+
+    def get_area(self):
+        raise NotImplementedError
+
+
+class Polygon(BaseShape):
     def __init__(self, *coordinates):
         if len(coordinates) % 2 != 0:
             raise ValueError
         self.coordinates = coordinates
+        self.sides = self.calculate_sides()
 
-    def get_perimeter(self):
-        perimeter = 0
+    def calculate_sides(self):
+        sides = []
         for i in range(0, len(self.coordinates) - 2, 2):
             x1 = self.coordinates[i]
             y1 = self.coordinates[i + 1]
             x2 = self.coordinates[i + 2]
             y2 = self.coordinates[i + 3]
             side = distance_between_points(x1, y1, x2, y2)
-            perimeter += side
+            sides.append(side)
         x1 = self.coordinates[-2]
         y1 = self.coordinates[-1]
         x2 = self.coordinates[0]
         y2 = self.coordinates[1]
         side = distance_between_points(x1, y1, x2, y2)
-        perimeter += side
+        sides.append(side)
+        return sides
+
+    def get_perimeter(self):
+        perimeter = sum(self.sides)
         return perimeter
 
 
-class Circle:
+class Circle(BaseShape):
     def __init__(self, radius):
         if radius <= 0:
             raise ValueError("Radius must be positive")
@@ -95,7 +108,7 @@ class Circle:
         return pi * (self.radius ** 2)
 
 
-class Rectangle:
+class Rectangle(BaseShape):
     def __init__(self, x1, y1, x2, y2):
         self.side_1 = abs(x2 - x1)
         self.side_2 = abs(y2 - y1)
@@ -128,11 +141,12 @@ class Square(Rectangle):
         return "Square"
 
 
-class Triangle:
+class Triangle(Polygon):
     def __init__(self, x1, y1, x2, y2, x3, y3):
-        self.side_a = distance_between_points(x1, y1, x2, y2)
-        self.side_b = distance_between_points(x2, y2, x3, y3)
-        self.side_c = distance_between_points(x3, y3, x1, y1)
+        super().__init__(x1, y1, x2, y2, x3, y3)
+        self.side_a = self.sides[0]
+        self.side_b = self.sides[1]
+        self.side_c = self.sides[2]
 
         if not self.is_valid_triangle():
             raise ValueError("The given points do not form a valid triangle.")
@@ -143,9 +157,6 @@ class Triangle:
     def is_valid_triangle(self):
         a, b, c = self.side_a, self.side_b, self.side_c
         return a + b > c and b + c > a and c + a > b
-
-    def get_perimeter(self):
-        return self.side_a + self.side_b + self.side_c
 
     def get_area(self):
         s = self.get_perimeter() / 2
