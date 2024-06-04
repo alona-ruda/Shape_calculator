@@ -1,5 +1,5 @@
 import unittest
-from shape_calculator import (parse_input, Rectangle, Square, Triangle,
+from shape_calculator import (parse_input, Rectangle, Square, Triangle, Polygon,
                             Circle, calc)
 
 
@@ -147,3 +147,17 @@ class TestCalc(unittest.TestCase):
     def test_missing_values(self):
         with self.assertRaises(ValueError):
             calc("Rectangle TopRight 5 8 BottomLeft")
+
+
+class TestPolygon(unittest.TestCase):
+    def test_polygon(self):
+        polygon = Polygon(0, 0, 1, 1, 0, 2)
+        self.assertEqual(polygon.get_perimeter(), 4.82842712474619)
+
+    def test_polygon2(self):
+        polygon = Polygon(2, -5, 1, 7, 0, 2)
+        self.assertEqual(polygon.get_perimeter(), 24.420723981665596)
+
+    def test_invalid_polygon(self):
+        with self.assertRaises(ValueError):
+            Polygon(2, -5, 1, 7, 0, 2, 6)

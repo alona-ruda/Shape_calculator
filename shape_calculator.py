@@ -55,6 +55,30 @@ def parse_input(data):
     return result_dict
 
 
+class Polygon:
+    def __init__(self, *coordinates):
+        if len(coordinates) % 2 != 0:
+            raise ValueError
+        self.coordinates = coordinates
+
+    def get_perimeter(self):
+        perimeter = 0
+        for i in range(0, len(self.coordinates) - 2, 2):
+            x1 = self.coordinates[i]
+            y1 = self.coordinates[i + 1]
+            x2 = self.coordinates[i + 2]
+            y2 = self.coordinates[i + 3]
+            side = distance_between_points(x1, y1, x2, y2)
+            perimeter += side
+        x1 = self.coordinates[-2]
+        y1 = self.coordinates[-1]
+        x2 = self.coordinates[0]
+        y2 = self.coordinates[1]
+        side = distance_between_points(x1, y1, x2, y2)
+        perimeter += side
+        return perimeter
+
+
 class Circle:
     def __init__(self, radius):
         if radius <= 0:
