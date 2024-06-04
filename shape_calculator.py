@@ -108,10 +108,12 @@ class Circle(BaseShape):
         return pi * (self.radius ** 2)
 
 
-class Rectangle(BaseShape):
+class Rectangle(Polygon):
     def __init__(self, x1, y1, x2, y2):
-        self.side_1 = abs(x2 - x1)
-        self.side_2 = abs(y2 - y1)
+        super().__init__(x1, y1, x2, y1, x2, y2, x1, y2)
+        self.side_1 = self.sides[0]
+        self.side_2 = self.sides[1]
+
 
     def __str__(self):
         return "Rectangle"
