@@ -1,5 +1,5 @@
 import unittest
-from task_DiversiPy import (parse_input, Rectangle, Square, Triangle,
+from shape_calculator import (parse_input, Rectangle, Square, Triangle,
                             Circle, calc)
 
 
@@ -68,13 +68,13 @@ class TestRectangle(unittest.TestCase):
 
 class TestSquare(unittest.TestCase):
     def test_square(self):
-        square = Square(5)
+        square = Square(5, 0, 0)
         self.assertEqual(square.get_area(), 25)
         self.assertEqual(square.get_perimeter(), 20)
 
     def test_square_negative(self):
         with self.assertRaises(ValueError):
-            Square(-2)
+            Square(-2, 0, 0)
 
 
 class TestTriangle(unittest.TestCase):
@@ -129,7 +129,7 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(result, "Perimeter of Rectangle = 20.0. Area = 24.0")
 
     def test_square(self):
-        result = calc("Square Side 4")
+        result = calc("Square TopRight 1 1 Side 4")
         self.assertEqual(result, "Perimeter of Square = 16.0. Area = 16.0")
 
     def test_invalid_data_format(self):

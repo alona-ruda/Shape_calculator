@@ -87,10 +87,13 @@ class Rectangle:
 
 
 class Square:
-    def __init__(self, side):
+    def __init__(self, side, x1, y1):
         if side <= 0:
             raise ValueError("Side must be positive")
         self.side = side
+
+        self.x1 = x1
+        self.y1 = y1
 
     def __str__(self):
         return "Square"
@@ -160,7 +163,8 @@ def calc(data):
                 raise ValueError("Invalid coordinates for Rectangle")
             shape = Rectangle(x1, y1, x2, y2)
         case 'Square':
-            shape = Square(parsed_data['Side'])
+            x1, y1 = parsed_data["TopRight"]
+            shape = Square(parsed_data['Side'], x1, y1)
         case _:
             raise ValueError(f"Unknown shape: {parsed_data['Shape']}. Please try again")
 
