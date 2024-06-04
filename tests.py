@@ -66,11 +66,19 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(rectangle.get_area(), 42)
 
 
+
 class TestSquare(unittest.TestCase):
     def test_square(self):
         square = Square(5, 0, 0)
         self.assertEqual(square.get_area(), 25)
         self.assertEqual(square.get_perimeter(), 20)
+        self.assertEqual(square.x1, 0)
+        self.assertEqual(square.y1, 0)
+        self.assertEqual(square.x2, 5)
+        self.assertEqual(square.y2, 5)
+        self.assertEqual(square.side, 5)
+        self.assertEqual(square.side_1, 5)
+        self.assertEqual(square.side_2, 5)
 
     def test_square_negative(self):
         with self.assertRaises(ValueError):

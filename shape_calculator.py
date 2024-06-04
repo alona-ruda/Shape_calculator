@@ -86,7 +86,7 @@ class Rectangle:
         return self.side_1 * self.side_2
 
 
-class Square:
+class Square(Rectangle):
     def __init__(self, side, x1, y1):
         if side <= 0:
             raise ValueError("Side must be positive")
@@ -94,15 +94,14 @@ class Square:
 
         self.x1 = x1
         self.y1 = y1
+        self.x2 = x1 + self.side
+        self.y2 = y1 + self.side
+
+        super().__init__(x1, y1, self.x2, self.y2)
+
 
     def __str__(self):
         return "Square"
-
-    def get_perimeter(self):
-        return self.side * 4
-
-    def get_area(self):
-        return self.side ** 2
 
 
 class Triangle:
